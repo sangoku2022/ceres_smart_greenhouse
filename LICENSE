@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 sangoku2022
+Copyright (c) 2026 Ceres Smart Greenhouse Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,98 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
+```markdown:Push Ceres Smart Greenhouse to GitHub:push_to_github_guide.md
+# Pushing `ceres_smart_greenhouse` to GitHub
+
+Follow these steps to publish your `ceres_smart_greenhouse` integration and portal files to a public GitHub repository so you can install it via **Home Assistant Marketplace** (or HACS) and track releases.
+
+---
+
+## 1. Create a Repository on GitHub
+
+1. Sign in to [GitHub](https://github.com) and click **New repository** (`+` in the top-right corner).
+2. Name the repository `ceres_smart_greenhouse`.
+3. Set visibility to **Public** (required for standard Marketplace / HACS repository indexing).
+4. Leave **Add a README** unchecked if you already have local files ready, then click **Create repository**.
+5. Copy the repository URL, for example:
+   - HTTPS: `https://github.com/<your-username>/ceres_smart_greenhouse.git`
+   - SSH: `git@github.com:<your-username>/ceres_smart_greenhouse.git`
+
+---
+
+## 2. Organize Your Project Folder Locally (Including OSI `LICENSE`)
+
+Create a working folder on your computer with `hacs.json` and your OSI-approved `LICENSE` (MIT) at the root, and your integration files under `custom_components/ceres_smart_greenhouse/`:
+
+```text
+ceres_smart_greenhouse/
+├── hacs.json
+├── README.md
+├── LICENSE
+├── index.html
+└── custom_components/
+    └── ceres_smart_greenhouse/
+        ├── __init__.py
+        ├── manifest.json
+        ├── config_flow.py
+        └── services.yaml
+```
+
+> Tip: Save the `LICENSE` file in the root of your `ceres_smart_greenhouse` folder so GitHub automatically detects the OSI-approved **MIT License** on your repository page. In your **Ceres HA Marketplace Device Integration** view (`index.html`), you can select each tab under **HACS / HA Marketplace Package Files** and click **Copy File** to save each file into its matching path. Make sure the `"version"` in `manifest.json` (for example `"1.0.0"`) matches the release tag you will publish on GitHub.
+
+---
+
+## 3. Initialize Git, Commit, and Push
+
+Open a terminal inside your `ceres_smart_greenhouse` folder and run:
+
+```bash
+git init
+git branch -M main
+git add .
+git commit -m "Initial release of Ceres Smart Greenhouse"
+git remote add origin https://github.com/<your-username>/ceres_smart_greenhouse.git
+git push -u origin main
+```
+
+If Git prompts for authentication:
+- **HTTPS**: Use a GitHub **Personal Access Token** (with `repo` scope) as your password when prompted.
+- **SSH**: Ensure your SSH key is added to your GitHub account under **Settings → SSH and GPG keys**, and use `git@github.com:<your-username>/ceres_smart_greenhouse.git` as the remote URL.
+
+---
+
+## 4. Publish a GitHub Release
+
+Home Assistant Marketplace and HACS look for **published GitHub Releases** (such as `v1.0.0`) rather than unattached commits or tags alone:
+
+1. On your GitHub repository page, click **Releases** on the right sidebar, then select **Draft a new release**.
+2. Click **Choose a tag**, type `v1.0.0`, and select **Create new tag: v1.0.0 on publish**.
+3. Enter a release title like `v1.0.0 - Ceres Smart Greenhouse` and add brief release notes.
+4. Click **Publish release**.
+
+---
+
+## 5. Updating Your Code Later
+
+Whenever you make edits in `index.html` or `custom_components/ceres_smart_greenhouse/`:
+
+```bash
+git add .
+git commit -m "Update greenhouse entity bindings and HUD"
+git push
+```
+
+When you are ready to ship a new version to Home Assistant:
+1. Bump `"version"` in `custom_components/ceres_smart_greenhouse/manifest.json` (for example from `"1.0.0"` to `"1.1.0"`).
+2. Commit and push to `main`.
+3. Draft and publish a matching GitHub Release (`v1.1.0`).
+
+---
+
+## 6. Install in Home Assistant Marketplace
+
+1. Open Home Assistant and go to **Settings → Marketplace** (or **HACS → Integrations** on older releases).
+2. Choose **Add from link** (or **Custom repositories**) and paste `https://github.com/<your-username>/ceres_smart_greenhouse`.
+3. Select **Ceres Smart Greenhouse** and click **Install**, then restart Home Assistant if prompted.
+4. Go to **Settings → Devices & services → Add integration** and search for **Ceres Smart Greenhouse**.
